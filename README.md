@@ -6,7 +6,7 @@ El código original está estructurado y optimizado en forma de libreta interact
 
 ---
 
-## 🚀 Arquitectura General del Proyecto
+## Arquitectura General del Proyecto
 
 El flujo de trabajo se divide rigurosamente en 7 bloques secuenciales y modulares:
 
@@ -25,7 +25,7 @@ El flujo de trabajo se divide rigurosamente en 7 bloques secuenciales y modulare
 
 ---
 
-## 📊 Benchmarking de Modelos (Configuraciones A–J)
+##  Benchmarking de Modelos (Configuraciones A–J)
 
 El proyecto evalúa empíricamente cómo impactan la normalización, las funciones de activación (`ReLU`, `Tanh`, `LeakyReLU`, `ELU`), la profundidad de la red y la tasa de aprendizaje (`learning_rate`) en la métrica final:
 
@@ -44,7 +44,7 @@ El proyecto evalúa empíricamente cómo impactan la normalización, las funcion
 
 ---
 
-## 🛠️ Aspectos Técnicos Relevantes
+##  Aspectos Técnicos Relevantes
 
 ### Estabilidad Numérica y Funciones de Pérdida
 En lugar de añadir una función de activación sigmoide en la última capa de la red, la arquitectura de la clase `RedDiabetes` expone directamente los **logits**. El motor de entrenamiento utiliza la función de pérdida **`nn.BCEWithLogitsLoss`**. Esto asegura una óptima estabilidad numérica al procesar los gradientes de la clasificación binaria (evitando subdesbordamientos o desbordamientos matemáticos que ocurren comúnmente al calcular de forma aislada $\log(	ext{Sigmoid}(x))$).
@@ -58,7 +58,7 @@ Por consiguiente, el proyecto prioriza el **Recall (Sensibilidad)** sobre la Pre
 
 ---
 
-## 💻 Requisitos e Instalación
+##  Requisitos e Instalación
 
 Para replicar este pipeline, asegúrate de contar con un entorno de Python 3.8+ e instalar los siguientes paquetes fundamentales:
 
@@ -79,7 +79,7 @@ df = pd.read_excel('datos/diab.xlsx')
 
 ---
 
-## 📈 Conclusiones Clave del Experimento
+##  Conclusiones Clave del Experimento
 
 1. **Impacto Crítico de la Normalización:** Los modelos entrenados con datos crudos sin normalizar (**A–D**) exhiben un comportamiento inestable en sus gradientes y requieren un mayor número de épocas para converger. Los modelos normalizados (**E–J**) logran converger más rápido debido a que eliminan las discrepancias de magnitudes métricas entre variables (por ejemplo, los valores absolutos de Glucosa vs. Edad).
 2. **Mitigación del Sobreajuste:** La inclusión de una penalización regularizadora $L_2$ (`weight_decay=1e-4`) suaviza las fronteras de decisión y optimiza significativamente las métricas en el conjunto de datos de Prueba, disminuyendo la brecha típica entre las pérdidas de entrenamiento y validación.
